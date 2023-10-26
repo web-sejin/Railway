@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "369699194566",
+    "project_id": "railway-9fcc2",
+    "storage_bucket": "railway-9fcc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369699194566:android:ca4a00ab707936b30539c7",
+        "android_client_info": {
+          "package_name": "com.railway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSknB0KB9cg--s4pNQ8vUMym7sJr5HZCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
