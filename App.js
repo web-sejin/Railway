@@ -47,28 +47,19 @@ const App = () => {
   const [appToken, setAppToken] = useState();
   const webViews = useRef();
   const [is_loading, set_is_loading] = useState(false);
+  const [stateColor, setStateColor] = useState("#28305B");
 
   let canGoBack = false;
   let timeOut;
 
+  useEffect(() => { 
+    setTimeout(function(){SplashScreen.hide();}, 1500);     
+  }, []);
+
   //권한
   if(Platform.OS == 'android'){
     usePermissions(CALL_PERMISSIONS_NOTI);
-  }
-
-  function fnPopState(pop_id, type){
-    if(pop_id == "code_pop"){
-      codePopState = type;
-    }else if(pop_id == "leave_pop"){
-      leavePopState = type;
-    }else if(pop_id == "agree_pop"){
-      agreePopState = type;
-    }else if(pop_id == "privacy_pop"){
-      privacyPopState = type;
-    }else if(pop_id == "regi_chk_pop"){
-      regiChkPopState = type;
-    }
-  }
+  }  
 
   //토큰값 구하기
   useEffect(() => {
@@ -111,6 +102,20 @@ const App = () => {
     });
   } ,[]);
 
+  function fnPopState(pop_id, type){
+    if(pop_id == "code_pop"){
+      codePopState = type;
+    }else if(pop_id == "leave_pop"){
+      leavePopState = type;
+    }else if(pop_id == "agree_pop"){
+      agreePopState = type;
+    }else if(pop_id == "privacy_pop"){
+      privacyPopState = type;
+    }else if(pop_id == "regi_chk_pop"){
+      regiChkPopState = type;
+    }
+  }
+
   //포스트메세지 (웹 -> 앱)
   const onWebViewMessage = (webViews) => {
     let jsonData = JSON.parse(webViews.nativeEvent.data);
@@ -122,8 +127,14 @@ const App = () => {
 
   const onNavigationStateChange = (webViewState)=>{
     set_urls(webViewState.url);
-
+    
     //console.log("webViewState.url : ", webViewState.url);
+    //console.log(" :::::::::::: ", webViewState.url.indexOf("login.php"));
+    if(webViewState.url.indexOf("index.php") >=0 || webViewState.url.indexOf("login.php") >= 0){
+      setStateColor("#28305B");
+    }else{
+      setStateColor("#2E88A8");
+    }
 
     codePopState = false;
     leavePopState = false;
@@ -149,7 +160,7 @@ const App = () => {
   }, [urls]);
 
   const backAction = () => {
-    const app_split = urls.split('?is_api=')[0];
+    const app_split = urls.split('?chk_app=')[0];
     console.log("regiChkPopState : ",regiChkPopState)
 
   if(codePopState){
@@ -209,7 +220,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={{flex:1}}>
-      <StatusBar backgroundColor="#2E88A8" />
+      <StatusBar backgroundColor={stateColor} barStyle={"light-content"} />
       {is_loading ? (
       <WebView
         ref={webViews}
