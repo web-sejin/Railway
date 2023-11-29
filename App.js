@@ -40,7 +40,8 @@ let regiChkPopState = false;
 const App = () => {
   let { height, width } = Dimensions.get('window');
 
-  const app_domain = "https://cnj05.cafe24.com";  
+  //const app_domain = "https://cnj05.cafe24.com";  
+  const app_domain = "https://rms.kr";  
   const url = app_domain+"?chk_app=Y&app_token=";
 
   const [urls, set_urls] = useState("ss");
@@ -130,7 +131,7 @@ const App = () => {
     
     //console.log("webViewState.url : ", webViewState.url);
     //console.log(" :::::::::::: ", webViewState.url.indexOf("login.php"));
-    if(webViewState.url.indexOf("index.php") >=0 || webViewState.url.indexOf("login.php") >= 0){
+    if(webViewState.url.indexOf("login.php") >= 0){
       setStateColor("#28305B");
     }else{
       setStateColor("#2E88A8");
@@ -188,7 +189,6 @@ const App = () => {
         urls.indexOf("login.php") != -1 ||
         urls.indexOf("index.php") != -1 ||
         urls.indexOf("member_list.php") != -1 ||
-        (urls.indexOf("pdf_view.php") != -1 && urls.indexOf("is_recently=") != -1) ||
         urls.indexOf("mypage.php") != -1
     ){     
         if(!canGoBack){ 
@@ -219,8 +219,12 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={{flex:1}}>
-      <StatusBar backgroundColor={stateColor} barStyle={"light-content"} />
+    <SafeAreaView style={{flex:1}}>      
+      {Platform.OS === 'ios' ? (
+        <StatusBar barStyle={"dark-content"} />
+      ) : (
+        <StatusBar backgroundColor={stateColor} barStyle={"light-content"} />
+      )}
       {is_loading ? (
       <WebView
         ref={webViews}

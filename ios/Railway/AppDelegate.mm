@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import <Firebase.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -40,6 +41,10 @@
   _bridgeAdapter = [[RCTSurfacePresenterBridgeAdapter alloc] initWithBridge:bridge contextContainer:_contextContainer];
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
 #endif
+  
+  if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
 
   UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"Railway", nil);
 
